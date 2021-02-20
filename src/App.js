@@ -75,6 +75,14 @@ function App() {
         });
       })
       .catch((error) => alert(error.massage));
+    setOpen(false);
+  };
+  const signIn = (e) => {
+    e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.massage));
+    setOpenSignin(false);
   };
   return (
     <div className="App">
@@ -112,6 +120,34 @@ function App() {
           </form>
         </div>
       </Modal>
+      <Modal open={openSignin} onClose={() => setOpenSignin(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <center>
+            <img
+              className="App__headerImage"
+              src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+              alt="instagram logo"
+            />
+          </center>
+          <form className="app__signup">
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signIn}>
+              Sign in
+            </Button>
+          </form>
+        </div>
+      </Modal>
       <div className="App__header">
         <img
           className="App__headerImage"
@@ -124,7 +160,7 @@ function App() {
         <Button onClick={() => auth.signOut()}>Logout</Button>
       ) : (
         <div className="app__loginContainer">
-          <Button onClick={() => setOpen(true)}>Sign In</Button>
+          <Button onClick={() => setOpenSignin(true)}>Sign In</Button>
           <Button onClick={() => setOpen(true)}>Sign Up</Button>
         </div>
       )}
